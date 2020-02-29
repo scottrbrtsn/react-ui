@@ -2,7 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { PolySynth } from "tone";
 import { Freeverb } from "tone";
+
 import './App.css';
+
+//Browsers do not like mouseHover for audio events.  
 
 export default class App extends React.Component {
   constructor(props) {
@@ -10,7 +13,7 @@ export default class App extends React.Component {
     this.handleUp = this.handleUp.bind(this);
     this.handleDown = this.handleDown.bind(this);
     this.playNote = this.playNote.bind(this); 
-
+ 
     this.noteOne = 73.42;
     this.noteTwo = 110;
     this.noteThree = 146.83;
@@ -30,8 +33,6 @@ export default class App extends React.Component {
   handleDown() {
     this.updateSynth(-10);
   }
-
-
 
   updateSynth(val){
     this.revDamp = this.revDamp + val/10;
@@ -73,13 +74,14 @@ export default class App extends React.Component {
   
   playNoteButton = (offset) => {
     return(
-        <button className="button" onMouseEnter={() => this.playNote(offset)}>
+        <button className="button" onMouseDown={() => this.playNote(offset)}>
         
         </button>
     );
   }
 
   playNote(offset) {
+  
     offset = offset * .50;
     if(offset !== 0){
       this.synth.triggerAttackRelease([this.noteOne + offset, this.noteTwo + offset, this.noteThree + offset], 1);
